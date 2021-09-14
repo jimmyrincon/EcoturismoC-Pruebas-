@@ -15,20 +15,21 @@ app.set('views', 'views');
  */
 const Person = mongoose.model('Person', {
   nombres: String,
-  documento: String
+  documento: String,
+  genero: String,
+  correo: String,
+  telefono: String,
+  ciudad: String,
+  mensaje: String
 });
 
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
-  let person = new Person(req.body);
-  person.save().then(() => {
-    console.log('Uno');
-    res.send({body: "sadfsad"});
+  Person.find().then((person) => {
+    res.send(person);
   });
-
-  console.log('Dos');
 });
 
 app.post('/registrar', function(req, res) {
